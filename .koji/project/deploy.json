@@ -1,7 +1,7 @@
 {
   "deploy": {
     "frontend": {
-      "output": "build",
+      "output": "./frontend/build",
       "type": "static",
       "commands": [
         "npm install",
