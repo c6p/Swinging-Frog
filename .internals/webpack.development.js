@@ -122,6 +122,7 @@ module.exports = {
     host: '0.0.0.0',
     disableHostCheck: true,
     overlay: true,
+    public: process.env.KOJI_SERVICE_URL_frontend,
   },
   plugins: [
     new webpack.DefinePlugin({

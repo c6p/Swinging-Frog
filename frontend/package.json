@@ -1,17 +1,12 @@
 {
-  "name": "hello-world-webpack",
+  "name": "simple-webpack-scaffold",
   "version": "1.0.0",
   "description": "A blank Koji template with webpack bundler",
-  "author": "username",
+  "author": "seane",
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./.internals/webpack.production.js --color -p --progress --hide-modules --display-optimization-bailout",
-    "postbuild": "koji-tools pwa",
-    "prestart": "koji-tools watch &",
+    "prestart": "koji-vcc watch &",
     "start": "webpack-dev-server --config ./.internals/webpack.development.js --hot --inline"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/madewithkoji/hello-world-webpack.git"
   },
   "keywords": [
     "Koji",
@@ -19,7 +14,7 @@
     "Webpack"
   ],
   "dependencies": {
-    "koji-tools": "^0.5.1"
+    "@withkoji/vcc": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
