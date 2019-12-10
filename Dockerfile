@@ -13,7 +13,7 @@ RUN ./.remy/scripts/init.sh https://projects.koji-cdn.com/2e962d6e-2419-4d8e-ade
 
 # Run install commands if we have them
 RUN npm install --prefix .remy
-RUN npm install --prefix .
+RUN npm install --prefix ./frontend
 
 # Start remy
 CMD npm start --prefix ./.remy
