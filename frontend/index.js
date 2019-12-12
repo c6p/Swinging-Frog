@@ -1,4 +1,5 @@
 import Koji from '@withkoji/vcc';
+import './styles.css';
 
 // render app
 const render = () => {
