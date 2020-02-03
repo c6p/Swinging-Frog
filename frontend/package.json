@@ -1,8 +1,8 @@
 {
-  "name": "simple-webpack-scaffold",
+  "name": "simple-phaser3-scaffold",
   "version": "1.0.0",
-  "description": "A blank Koji template with webpack bundler",
-  "author": "seane",
+  "description": "A blank Koji Phaser 3 template with webpack bundler",
+  "author": "snowbillr",
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./.internals/webpack.production.js --color -p --progress --hide-modules --display-optimization-bailout",
     "prestart": "koji-vcc watch &",
@@ -10,11 +10,13 @@
   },
   "keywords": [
     "Koji",
-    "Hello World",
-    "Webpack"
+    "Webpack",
+    "Phaser",
+    "Phaser 3"
   ],
   "dependencies": {
-    "@withkoji/vcc": "^1.1.1"
+    "@withkoji/vcc": "^1.1.1",
+    "phaser": "^3.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
