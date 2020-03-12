@@ -17,7 +17,6 @@ export class UIScene extends Phaser.Scene {
     if (this.game.sound.mute) {
       this.unmute.setAlpha(0);
     } else {
-      console.log(this.unmute);
       this.mute.setAlpha(0);
     }
   }
