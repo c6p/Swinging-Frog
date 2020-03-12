@@ -1,0 +1,63 @@
+{
+  "strings": {
+    "font": {
+      "kind": "webfonts#webfont",
+      "family": "Comfortaa",
+      "category": "display",
+      "variants": [
+        "300",
+        "regular",
+        "500",
+        "600",
+        "700"
+      ],
+      "subsets": [
+        "latin",
+        "cyrillic",
+        "cyrillic-ext",
+        "greek",
+        "latin-ext",
+        "vietnamese"
+      ],
+      "version": "v28",
+      "lastModified": "2020-02-05",
+      "files": {
+        "300": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4TbMPrQVIT9c2c8.ttf",
+        "500": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4VrMPrQVIT9c2c8.ttf",
+        "600": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4bbLPrQVIT9c2c8.ttf",
+        "700": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4Y_LPrQVIT9c2c8.ttf",
+        "regular": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4WjMPrQVIT9c2c8.ttf"
+      }
+    },
+    "title": "Game Template",
+    "play_button": "Play"
+  },
+  "@@editor": [
+    {
+      "key": "strings",
+      "name": "Strings",
+      "icon": "📝",
+      "source": "strings.json",
+      "fields": [
+        {
+          "key": "font",
+          "name": "Font Family",
+          "description": "Google font family for text in game",
+          "type": "custom<jims-google-font-vcc>"
+        },
+        {
+          "key": "title",
+          "name": "Game Title",
+          "description": "Title of the game to display on the main screen if no logo",
+          "type": "string"
+        },
+        {
+          "key": "play_button",
+          "name": "Play button text",
+          "description": "Text displayed on the play button",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "colors": {
+    "background": "#000000",
+    "font": "#FFFFFF",
+    "button_font": "#FFFFFF",
+    "button": "#00AAFF"
+  },
+  "@@editor": [
+    {
+      "key": "colors",
+      "name": "Colors",
+      "icon": "🎨",
+      "source": "colors.json",
+      "fields": [
+        {
+          "key": "background",
+          "name": "Background Color",
+          "description": "Main background color for the game",
+          "type": "color"
+        },
+        {
+          "key": "font",
+          "name": "Font Color",
+          "description": "Main font color for the game",
+          "type": "color"
+        },
+        {
+          "key": "button_font",
+          "name": "Button Font Color",
+          "description": "Font color on buttons",
+          "type": "color"
+        },
+        {
+          "key": "button",
+          "name": "Button Background Color",
+          "description": "Background color for buttons",
+          "type": "color"
+        }
+      ]
+    }
+  ]
+}

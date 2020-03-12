@@ -1,0 +1,21 @@
+{
+  "audio": {
+    "background": ""
+  },
+  "@@editor": [
+    {
+      "key": "audio",
+      "name": "Audio",
+      "icon": "🎵",
+      "source": "Audio.json",
+      "fields": [
+        {
+          "key": "background",
+          "name": "Background Color",
+          "description": "Music looping in background during gameplay",
+          "type": "sound"
+        }
+      ]
+    }
+  ]
+}

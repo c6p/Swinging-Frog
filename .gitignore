@@ -6,3 +6,7 @@ build
 
 # Koji
 .remy
+
+.assets
+.DS_Store
+.env

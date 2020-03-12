@@ -80,13 +80,7 @@ module.exports = {
         test: /\.(jpg|png|gif)$/,
         use: [
           {
-            loader: 'url-loader',
-            options: {
-              limit: 10 * 1024,
-            },
-          },
-          {
-            loader: 'image-webpack-loader',
+            loader: 'file-loader',
             options: {
               mozjpeg: {
                 enabled: false,
@@ -98,7 +92,7 @@ module.exports = {
                 optimizationLevel: 7,
               },
               pngquant: {
-                quality: '65-90',
+                quality: [0.65, 0.90],
                 speed: 4,
               },
             },

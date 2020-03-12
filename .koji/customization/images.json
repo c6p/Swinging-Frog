@@ -1,0 +1,28 @@
+{
+  "images": {
+    "background": "",
+    "logo": ""
+  },
+  "@@editor": [
+    {
+      "key": "images",
+      "name": "Images",
+      "icon": "🖼️",
+      "source": "images.json",
+      "fields": [
+        {
+          "key": "background",
+          "name": "Background Image",
+          "description": "Main background image for the game - Scaled then cropped to 672x1193",
+          "type": "image"
+        },
+        {
+          "key": "logo",
+          "name": "Logo Image",
+          "description": "Your brand logo - Scaled down to fit within 256x256 (aspect ratio maintained)",
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
