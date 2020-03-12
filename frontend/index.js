@@ -41,8 +41,8 @@ if (Koji.config.strings.font) {
       const style = `url("${Koji.config.images.background}") center center / cover no-repeat fixed`;
       document.body.style.background = style;
 
-      var game = new Phaser.Game(config)
       document.getElementById('loading').remove();
+      var game = new Phaser.Game(config)
     
     }
   });
