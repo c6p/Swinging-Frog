@@ -1,5 +1,5 @@
 import Koji from '@withkoji/vcc';
-import Phaser from 'phaser/dist/phaser-arcade-physics.min.js';
+import Phaser from 'phaser';
 import './styles.css';
 import { CONFIG } from 'config';
 import { MenuScene } from 'scenes/menu';
@@ -15,15 +15,14 @@ var config = {
     },
   disableContextMenu: true,
   physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
+    default: 'matter',
+    matter: {
       debug: true
     }
   },
   scene: [
-    MenuScene,
     GameScene,
+    MenuScene,
     UIScene
   ],
   transparent: true

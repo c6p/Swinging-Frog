@@ -1,0 +1,71 @@
+{
+  "levelEditor": {
+    "levels": [
+      [
+        {
+          "x": 233,
+          "y": 101
+        },
+        {
+          "x": 184,
+          "y": 424
+        },
+        {
+          "x": 226,
+          "y": 945
+        },
+        {
+          "x": 492,
+          "y": 248
+        },
+        {
+          "x": 413,
+          "y": 617
+        },
+        {
+          "x": 749,
+          "y": 123
+        },
+        {
+          "x": 707,
+          "y": 419
+        },
+        {
+          "x": 957,
+          "y": 255
+        },
+        {
+          "x": 947,
+          "y": 662
+        },
+        {
+          "x": 628,
+          "y": 815
+        }
+      ],
+      [],
+      [],
+      [],
+      []
+    ]
+  },
+  "@@editor": [
+    {
+      "key": "levelEditor",
+      "name": "Level Editor",
+      "icon": "🗺",
+      "source": "levelEditor.json",
+      "fields": [
+        {
+          "key": "levels",
+          "name": "Levels",
+          "description": "Customize level",
+          "type": "custom<swinging-person-level-editor>[]",
+          "arrayOptions": {
+            "addItemLabel": "Add Level"
+          }
+        }
+      ]
+    }
+  ]
+}

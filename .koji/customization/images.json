@@ -1,7 +1,10 @@
 {
   "images": {
     "background": "",
-    "logo": ""
+    "logo": "",
+    "player": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/zxllv-atlas.png",
+    "highlight": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/3v905-highlight.png",
+    "arrow": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/nbo0d-arrow.png"
   },
   "@@editor": [
     {
@@ -20,6 +23,24 @@
           "key": "logo",
           "name": "Logo Image",
           "description": "Your brand logo - Scaled down to fit within 256x256 (aspect ratio maintained)",
+          "type": "image"
+        },
+        {
+          "key": "highlight",
+          "name": "Highlight Handle",
+          "description": "",
+          "type": "image"
+        },
+        {
+          "key": "player",
+          "name": "Player Spritesheet",
+          "description": "",
+          "type": "image"
+        },
+        {
+          "key": "arrow",
+          "name": "Arrow Image",
+          "description": "",
           "type": "image"
         }
       ]
