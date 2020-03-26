@@ -77,7 +77,13 @@ export class GameScene extends Phaser.Scene {
   }
   
   create() {
-    this.cameras.main.setBounds(0, 0, CONFIG.WIDTH*2, CONFIG.HEIGHT);
+    var graphics = this.add.graphics();
+    const [W, H] = [CONFIG.WIDTH*2, CONFIG.HEIGHT]
+
+    graphics.fillGradientStyle(0x2980B9, 0x6DD5FA, 0x0082c8, 0x667db6, 1);
+    graphics.fillRect(0, 0, W, H);
+    this.cameras.main.setBounds(0, 0, W, H);
+
 	  this.matter.world.update30Hz();
     this.highlight = this.add.image(0, 0, 'highlight');
     this.arrow = this.add.image(0, 0, 'arrow').setVisible(false);
@@ -128,7 +134,7 @@ export class GameScene extends Phaser.Scene {
         this.arrow.y = 40
         this.arrow.x = this.player.x 
       } else {
-        console.log(this.arrow)
+        //console.log(this.arrow)
         this.arrow.angle = -90
         this.arrow.y = this.player.y
         this.arrow.x = 40 
@@ -147,6 +153,15 @@ export class GameScene extends Phaser.Scene {
 
     if (this.rope !== null) {
       this.rope.bodyB.angle = Phaser.Math.Angle.BetweenPoints(this.rope.pointA, this.rope.bodyB.position) - this.RIGHT_ANGLE
+      const b = this.player.body
+      //console.log(b.angularVelocity)
+      this.player.flipX = b.angularVelocity < 0
+      if (b.angularSpeed > 0.02)
+        this.player.setFrame(3)
+      else if (b.angularSpeed > 0.01)
+        this.player.setFrame(2)
+      else
+        this.player.setFrame(1)
     }
 
     //this.clearRope()
