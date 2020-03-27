@@ -5,20 +5,30 @@ import { CONFIG } from 'config';
 import { MenuScene } from 'scenes/menu';
 import { GameScene } from 'scenes/game';
 import { UIScene } from 'scenes/ui';
+import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
 
 var config = {
   scale: {
-        mode: Phaser.Scale.FIT,
-        width: CONFIG.WIDTH,
-        height: CONFIG.HEIGHT,
-        autoCenter: Phaser.Scale.Center.CENTER_BOTH
-    },
+    mode: Phaser.Scale.FIT,
+    width: CONFIG.WIDTH,
+    height: CONFIG.HEIGHT,
+    autoCenter: Phaser.Scale.Center.CENTER_BOTH
+  },
   disableContextMenu: true,
   physics: {
     default: 'matter',
     matter: {
       debug: true
     }
+  },
+  plugins: {
+    scene: [
+      {
+        plugin: PhaserMatterCollisionPlugin,
+        key: "matterCollision",
+        mapping: "matterCollision"
+      }
+    ]
   },
   scene: [
     GameScene,
@@ -36,13 +46,13 @@ if (Koji.config.strings.font) {
       families: [Koji.config.strings.font.family]
     },
     active: () => {
-      
+
       const style = `url("${Koji.config.images.background}") center center / cover no-repeat fixed`;
       document.body.style.background = style;
 
       document.getElementById('loading').remove();
       var game = new Phaser.Game(config)
-    
+
     }
   });
 }

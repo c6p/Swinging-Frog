@@ -2,9 +2,11 @@
   "images": {
     "background": "",
     "logo": "",
-    "player": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/e37mx-atlas.png",
+    "player": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/zjywo-atlas.png",
     "highlight": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/3v905-highlight.png",
-    "arrow": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/nbo0d-arrow.png"
+    "arrow": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/nbo0d-arrow.png",
+    "handle": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/erc84-handle.png",
+    "platform": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/kkkr5-platform.png"
   },
   "@@editor": [
     {
@@ -26,6 +28,12 @@
           "type": "image"
         },
         {
+          "key": "handle",
+          "name": "Handle Image",
+          "description": "",
+          "type": "image"
+        },
+        {
           "key": "highlight",
           "name": "Highlight Handle",
           "description": "",
@@ -34,6 +42,12 @@
         {
           "key": "player",
           "name": "Player Spritesheet",
+          "description": "",
+          "type": "image"
+        },
+        {
+          "key": "platform",
+          "name": "Platform Spritesheet",
           "description": "",
           "type": "image"
         },

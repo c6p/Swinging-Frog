@@ -16,6 +16,7 @@ export class GameScene extends Phaser.Scene {
   nearest = null
   highlight
   MAX_ROPE_LENGTH_SQUARED = CONFIG.MAX_ROPE_LENGTH * CONFIG.MAX_ROPE_LENGTH
+  platform
 
   nearestHandleTo(point) {
       const level = Koji.config.levelEditor.levels[this.currentLevel]
@@ -56,7 +57,8 @@ export class GameScene extends Phaser.Scene {
     const level = Koji.config.levelEditor.levels[this.currentLevel]
     for (let p of level) {
       //console.log(p)
-      this.add.circle(p.x, p.y, 10, 0xCCCCCC);
+      //this.add.circle(p.x, p.y, 10, 0xCCCCCC);
+      this.add.image(p.x, p.y, 'handle')
     }
   }s
 
@@ -71,9 +73,11 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload() { 
+    this.load.image('handle', Koji.config.images.handle);
     this.load.image('highlight', Koji.config.images.highlight);
     this.load.image('arrow', Koji.config.images.arrow);
-    this.load.spritesheet('player', Koji.config.images.player, { frameWidth: 80, frameHeight: 80 });
+    this.load.spritesheet('player', Koji.config.images.player, { frameWidth: 100, frameHeight: 100 });
+    this.load.spritesheet('platform', Koji.config.images.platform, { frameWidth: 120, frameHeight: 50 });
   }
   
   create() {
@@ -84,9 +88,20 @@ export class GameScene extends Phaser.Scene {
     graphics.fillRect(0, 0, W, H);
     this.cameras.main.setBounds(0, 0, W, H);
 
-	  this.matter.world.update30Hz();
+    //this.matter.world.update30Hz();
     this.highlight = this.add.image(0, 0, 'highlight');
     this.arrow = this.add.image(0, 0, 'arrow').setVisible(false);
+
+    this.anims.create({
+        key: 'bounce',
+        frames: this.anims.generateFrameNumbers('platform', { frames: [ 3,4,3,2,1,0,2,3 ] }),
+        frameRate: 20
+    });
+    this.platform = this.matter.add.sprite(50, 1150, 'platform', 0, { isStatic: true, shape: {type: 'rectangle', width: 100, height: 10}, render: {visible: false} }).setFrame(3)
+    //this.platform = this.matter.add.sprite(200, 1150, 'platform', 0, { isStatic: true, shape: {type: 'rectangle', width: 100, height: 10}, render: {visible: false} }).setFrame(3)
+    //this.platform = this.matter.add.sprite(350, 1150, 'platform', 0, { isStatic: true, shape: {type: 'rectangle', width: 100, height: 10}, render: {visible: false} }).setFrame(3)
+    //this.platform.setBody({type: 'rectangle', width: 100, height: 20})
+
 
     //const gameOver = this.matter.add.gameObject(this.add.rectangle(-CONFIG.WIDTH, CONFIG.HEIGHT+CONFIG.MAX_ROPE_LENGTH, CONFIG.WIDTH*4, 100), { shape: 'rect'})
     //gameOver.setOnCollide(()=>this.restart());
@@ -99,7 +114,8 @@ export class GameScene extends Phaser.Scene {
     //let rect = this.add.circle(50, 0, 20, 0xCCCCCC); //.setOrigin(0);
     //Phaser.Geom.Rectangle.Offset(rect, 0, -24);
     //let ball = this.add.image(50, 0, 'ball');
-    this.player = this.matter.add.sprite(50, 0, 'player', 0, { friction: 0, frictionAir: 0, timeScale: 0.5, render: { visible: false }});
+    this.player = this.matter.add.sprite(50, 0, 'player', 0, {shape: {type:'circle', radius:25}, scale: 0.5, friction: 0, frictionAir: 0, timeScale: 0.5, render: { visible: false }});
+    //this.player.setBody({type: 'circle', radius: 20})
     this.player.setOrigin(0.5,0.25);
     this.player.setMass(1);
     this.player.setFrame(1)
@@ -111,6 +127,15 @@ export class GameScene extends Phaser.Scene {
     this.input.on('pointerup', (pointer) => this.clearRope());
     this.input.on('pointerdown', (pointer) => this.createRopeTo(this.nearest));
 
+this.matterCollision.addOnCollideStart({
+  objectA: this.platform,
+  objectB: this.player,
+  callback: ({gameObjectA, gameObjectB}) => {
+    gameObjectA.play("bounce", false)
+    gameObjectB.setVelocityY(-this.player.body.velocity.y)
+    console.log(gameObjectA)
+  }
+});
 
     /*this.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
         console.log(bodyA, bodyB, gameOver)
