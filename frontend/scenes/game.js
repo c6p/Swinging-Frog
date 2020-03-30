@@ -168,7 +168,7 @@ export class GameScene extends Phaser.Scene {
     //let rect = this.add.circle(50, 0, 20, 0xCCCCCC); //.setOrigin(0);
     //Phaser.Geom.Rectangle.Offset(rect, 0, -24);
     //let ball = this.add.image(50, 0, 'ball');
-    this.player = this.matter.add.sprite(50, 0, 'player', 0, { shape: { type: 'circle', radius: 25 }, scale: 0.5, restitution: 0, friction: 0, frictionAir: 0, timeScale: 1, render: { visible: true } });
+    this.player = this.matter.add.sprite(50, 0, 'player', 0, { shape: { type: 'circle', radius: 25 }, scale: 0.5, restitution: 0, friction: 0, frictionAir: 0, timeScale: 0.5, render: { visible: true } });
     //this.player.setBody({type: 'circle', radius: 20})
     this.player.setOrigin(0.5, 0.25);
     this.player.setMass(1);

@@ -15,6 +15,7 @@ var config = {
     height: CONFIG.HEIGHT,
     autoCenter: Phaser.Scale.Center.CENTER_BOTH
   },
+  fps: 30,
   disableContextMenu: true,
   physics: {
     default: 'matter',
