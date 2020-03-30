@@ -6,6 +6,7 @@ import { MenuScene } from 'scenes/menu';
 import { GameScene } from 'scenes/game';
 import { UIScene } from 'scenes/ui';
 import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
+import RoundRectanglePlugin from 'phaser3-rex-plugins/plugins/roundrectangle-plugin.js';
 
 var config = {
   scale: {
@@ -22,17 +23,20 @@ var config = {
     }
   },
   plugins: {
-    scene: [
-      {
-        plugin: PhaserMatterCollisionPlugin,
-        key: "matterCollision",
-        mapping: "matterCollision"
-      }
-    ]
+    global: [{
+      key: 'rexRoundRectanglePlugin',
+      plugin: RoundRectanglePlugin,
+      start: true
+    }],
+    scene: [{
+      plugin: PhaserMatterCollisionPlugin,
+      key: "matterCollision",
+      mapping: "matterCollision"
+    }]
   },
   scene: [
-    GameScene,
     MenuScene,
+    GameScene,
     UIScene
   ],
   transparent: true

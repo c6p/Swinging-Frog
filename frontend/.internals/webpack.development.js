@@ -120,10 +120,10 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
+      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+      WEBGL_RENDERER: true,
+      CANVAS_RENDERER: true
+  }),
     new HtmlWebpackPlugin({
       inject: true,
       template: './index.html',
