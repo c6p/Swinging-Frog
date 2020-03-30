@@ -15,6 +15,9 @@ var config = {
     height: CONFIG.HEIGHT,
     autoCenter: Phaser.Scale.Center.CENTER_BOTH
   },
+  render: {
+    powerPreference: 'high-performance',
+  },
   fps: 30,
   disableContextMenu: true,
   physics: {
