@@ -209,18 +209,18 @@ export class GameScene extends Phaser.Scene {
     if (this.player.y > (CONFIG.HEIGHT + CONFIG.MAX_ROPE_LENGTH))
       this.scene.restart()
 
-    const b = this.player.body
+    /*const b = this.player.body
     if (b.speed > CONFIG.MAX_SPEED) {
       const m = CONFIG.MAX_SPEED / b.speed
       const v = b.velocity
       this.matter.setVelocity(this.player, v.x * m, v.y * m)
-    }
+    }*/
 
-    this.update2()
+    //this.update2()
   }
 
   update2() {
-    if (this.player.y < 0 || this.player.x < 0) {
+    /*if (this.player.y < 0 || this.player.x < 0) {
       this.arrow.visible = true
       if (this.player.y < 0) {
         this.arrow.angle = 0
@@ -234,7 +234,7 @@ export class GameScene extends Phaser.Scene {
       }
     } else {
       this.arrow.visible = false
-    }
+    }*/
 
     this.nearest = this.nearestHandleTo(this.playerPos())
     if (this.nearest === null)
@@ -245,7 +245,7 @@ export class GameScene extends Phaser.Scene {
       this.highlight.y = this.nearest.y
     }
 
-    if (this.rope !== null) {
+   /* if (this.rope !== null) {
       this.rope.bodyB.angle = Phaser.Math.Angle.BetweenPoints(this.rope.pointA, this.rope.bodyB.position) - this.RIGHT_ANGLE
       const b = this.player.body
       //console.log(b.angularVelocity)
@@ -256,7 +256,7 @@ export class GameScene extends Phaser.Scene {
         this.player.setFrame(2)
       else
         this.player.setFrame(1)
-    }
+    }*/
   }
 
     //this.clearRope()
