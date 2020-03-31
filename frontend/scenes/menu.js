@@ -16,7 +16,7 @@ export class MenuScene extends Phaser.Scene {
   preload() {
 
     if (Koji.config.images.background) {
-      this.load.image('background', Koji.config.images.background + '?fit=crop&w='+CONFIG.WIDTH+'&h='+CONFIG.HEIGHT);
+      this.load.image('background', Koji.config.images.background + '?fit=crop&w=' + CONFIG.WIDTH + '&h=' + CONFIG.HEIGHT);
     }
     document.body.style.backgroundColor = Koji.config.colors.background;
 
@@ -33,27 +33,27 @@ export class MenuScene extends Phaser.Scene {
     }
 
   }
-  
+
   create() {
     this.scene.launch("UIScene");
 
     if (Koji.config.images.logo) {
-      this.add.image(CONFIG.WIDTH/2, CONFIG.HEIGHT/2, 'logo');
+      this.add.image(CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2, 'logo');
     } else if (Koji.config.strings.title) {
-      this.add.text(CONFIG.WIDTH/2, CONFIG.HEIGHT/2, Koji.config.strings.title, { fontFamily: Koji.config.strings.font.family, fontSize: '60px', fill: Koji.config.colors.font }).setOrigin(0.5,0.5);
+      this.add.text(CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2, Koji.config.strings.title, { fontFamily: Koji.config.strings.font.family, fontSize: '60px', fill: Koji.config.colors.font }).setOrigin(0.5, 0.5);
     }
     if (Koji.config.strings.play_button) {
       this.graphics = this.add.graphics();
       this.graphics.fillStyle(Koji.config.colors.button.replace("#", "0x"), 1.0);
-      this.graphics.fillRoundedRect(CONFIG.WIDTH/4, CONFIG.HEIGHT/2+275,CONFIG.WIDTH/2,50)
-        .setInteractive(new Phaser.Geom.Rectangle(CONFIG.WIDTH/4, CONFIG.HEIGHT/2+275,CONFIG.WIDTH/2,50), Phaser.Geom.Rectangle.Contains)
+      this.graphics.fillRoundedRect(CONFIG.WIDTH / 4, CONFIG.HEIGHT / 2 + 275, CONFIG.WIDTH / 2, 50)
+        .setInteractive(new Phaser.Geom.Rectangle(CONFIG.WIDTH / 4, CONFIG.HEIGHT / 2 + 275, CONFIG.WIDTH / 2, 50), Phaser.Geom.Rectangle.Contains)
         .on('pointerdown', this.start_game, this);
-      this.startText = this.add.text(CONFIG.WIDTH/2, CONFIG.HEIGHT/2+300, Koji.config.strings.play_button, { fontFamily: Koji.config.strings.font.family, fontSize: '30px', fill: Koji.config.colors.button_font });
-      this.startText.setOrigin(0.5,0.5);
+      this.startText = this.add.text(CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 + 300, Koji.config.strings.play_button, { fontFamily: Koji.config.strings.font.family, fontSize: '30px', fill: Koji.config.colors.button_font });
+      this.startText.setOrigin(0.5, 0.5);
       this.startText.setInteractive().on('pointerdown', this.start_game, this);
     }
-    this.level = window.localStorage.getItem('level') || 0
-    this.add.text(CONFIG.WIDTH/2, CONFIG.HEIGHT/2+400, "Level: " + this.level, { fontFamily: Koji.config.strings.font.family, fontSize: '30px', fill: Koji.config.colors.font, align: 'center'}).setOrigin(0.5,0.5);
+    this.level = parseInt(window.localStorage.getItem('level')) || 0
+    this.add.text(CONFIG.WIDTH / 2, CONFIG.HEIGHT / 2 + 400, "Level: " + this.level, { fontFamily: Koji.config.strings.font.family, fontSize: '30px', fill: Koji.config.colors.font, align: 'center' }).setOrigin(0.5, 0.5);
 
     // audio
     if (Koji.config.audio.background) {
@@ -63,13 +63,13 @@ export class MenuScene extends Phaser.Scene {
     }
   }
 
-  update() {}
+  update() { }
 
   start_game() {
     if (Koji.config.audio.background) {
       this.background_music.play();
     }
-    this.scene.start("GameScene", {level:0});
+    this.scene.start("GameScene", { level: this.level });
   }
 
 }

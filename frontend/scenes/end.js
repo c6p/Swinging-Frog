@@ -9,11 +9,7 @@ export class EndScene extends Phaser.Scene {
     })
   }
 
-  preload() {
-    if (Koji.config.images.logo) {
-      this.load.image('logo', Koji.config.images.logo + '?fit=fillmax&w=256&h=256');
-    }
-   }
+  preload() { }
 
   create() {
     if (Koji.config.images.logo) {

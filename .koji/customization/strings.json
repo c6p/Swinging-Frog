@@ -29,16 +29,20 @@
         "regular": "http://fonts.gstatic.com/s/comfortaa/v28/1Pt_g8LJRfWJmhDAuUsSQamb1W0lwk4S4WjMPrQVIT9c2c8.ttf"
       }
     },
-    "title": "Game Template",
+    "title": "Swinging Frog",
     "play_button": "Play",
     "again_button": "Again?",
     "win": "You Win!",
-    "credits": "Can ALTIPARMAK - 2020\n\n\nMusic by bart\n\nhttps://opengameart.org\n/content/jump-higher-run-faster-jump-run-miniboss-mix"
+    "credits": "Can ALTIPARMAK - 2020\n\n\nMusic by bart\n\nhttps://opengameart.org\n/content/jump-higher-run-faster-jump-run-miniboss-mix",
+    "tutorial0": "Release 'Touch' to move FROG right\nOnwards to Finish & Glory",
+    "tutorial1": "To cling to highlighted handle\nTouch & Hold",
+    "scene_transition_time": 500,
+    "max_rope_length": 500
   },
   "@@editor": [
     {
       "key": "strings",
-      "name": "Strings",
+      "name": "Settings",
       "icon": "📝",
       "source": "strings.json",
       "fields": [
@@ -77,6 +81,34 @@
           "name": "Credits text",
           "description": "Text displayed on credits screen",
           "type": "string"
+        },
+        {
+          "key": "tutorial0",
+          "name": "Tutorial text 0",
+          "description": "Tutorial text 0",
+          "type": "string"
+        },
+        {
+          "key": "scene_transition_time",
+          "name": "Scene Transition Time",
+          "description": "Scene Transititon Time (default 500ms)",
+          "type": "range",
+          "typeOptions": {
+            "min": 0,
+            "max": 2000,
+            "step": 1
+          }
+        },
+        {
+          "key": "max_rope_length",
+          "name": "Max Rope Length",
+          "description": "Max Rope Length (default 500px)",
+          "type": "range",
+          "typeOptions": {
+            "min": 100,
+            "max": 1000,
+            "step": 1
+          }
         }
       ]
     }

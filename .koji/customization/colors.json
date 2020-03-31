@@ -3,7 +3,14 @@
     "background": "#000000",
     "font": "#FFFFFF",
     "button_font": "#FFFFFF",
-    "button": "#147B1E"
+    "button": "#147b1e",
+    "rope_color": "#f8615a",
+    "sky_background": [
+      "#2980b9",
+      "#6dd5fa",
+      "#0082c8",
+      "#667db6"
+    ]
   },
   "@@editor": [
     {
@@ -35,6 +42,21 @@
           "name": "Button Background Color",
           "description": "Background color for buttons",
           "type": "color"
+        },
+        {
+          "key": "rope_color",
+          "name": "Rope Color",
+          "description": "Color of frog's tongue",
+          "type": "color"
+        },
+        {
+          "key": "sky_background",
+          "name": "Background gradient for sky",
+          "type": "color[]",
+          "arrayOptions": {
+            "min": 4,
+            "max": 4
+          }
         }
       ]
     }

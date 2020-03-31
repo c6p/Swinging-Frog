@@ -31,37 +31,37 @@
         {
           "key": "handle",
           "name": "Handle Image",
-          "description": "",
+          "description": "Handle Image - 20x20",
           "type": "image"
         },
         {
           "key": "highlight",
           "name": "Highlight Handle",
-          "description": "",
+          "description": "Highlight Handle - 66x66",
           "type": "image"
         },
         {
           "key": "player",
           "name": "Player Spritesheet",
-          "description": "",
+          "description": "Player Spritesheet - Clamped down to 400x100 (4 frames 100x100)",
           "type": "image"
         },
         {
           "key": "platform",
           "name": "Platform Spritesheet",
-          "description": "",
+          "description": "Platform Spritesheet - Clamped down to 120x250 (5 frames 120x50)",
           "type": "image"
         },
         {
           "key": "arrow",
           "name": "Arrow Image",
-          "description": "",
+          "description": "Arrow Image - 40x40",
           "type": "image"
         },
         {
           "key": "finish",
           "name": "Finish Image",
-          "description": "",
+          "description": "Finish TileSprite - Scaled down to 40px wide (repeated to fill 40x1080)",
           "type": "image"
         }
       ]
