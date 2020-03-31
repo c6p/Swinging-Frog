@@ -20,7 +20,8 @@ export class GameScene extends Phaser.Scene {
   MAX_ROPE_LENGTH_SQUARED = CONFIG.MAX_ROPE_LENGTH * CONFIG.MAX_ROPE_LENGTH
   //platforms = []
   //obstacles = []
-  RAF = new Phaser.DOM.RequestAnimationFrame()
+  ropeSound
+  loss
 
   nearestHandleTo(point) {
     const handles = Koji.config.levelEditor.levels[this.currentLevel].handles
@@ -52,9 +53,10 @@ export class GameScene extends Phaser.Scene {
     if (this.rope !== null || point === null)
       return
     const distance = Phaser.Math.Distance.BetweenPoints(this.player, point);
-    this.rope = this.matter.add.worldConstraint(this.player, distance, 1, { pointA: point, render: { lineColor: 0xf8615a, lineThickness: 3, anchorColor: 0xf8615a, anchorSize: 3 } });
+    this.rope = this.matter.add.worldConstraint(this.player, distance, 1, { pointA: point, damping: 0, stiffness: 0.01, render: { lineColor: 0xf8615a, lineThickness: 3, anchorColor: 0xf8615a, anchorSize: 3 } });
     //console.log(this.rope)
     this.player.setFrame(1)
+    this.ropeSound.play()
   }
 
   createHandles() {
@@ -66,24 +68,26 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  createPlatforms() {
+  createPlatforms(group) {
     let platforms = []
     const level = Koji.config.levelEditor.levels[this.currentLevel]
     for (let p of level.platforms) {
-      let rect = Bodies.rectangle(p.x, p.y, 110, 10);
-      let circleA = Bodies.circle(p.x - 55, p.y, 5);
-      let circleB = Bodies.circle(p.x + 55, p.y, 5);
+      let rect = Bodies.rectangle(p.x, p.y, 120, 10);
+      rect.collisionFilter.group = group
+      //let circleA = Bodies.circle(p.x - 55, p.y, 5);
+      //let circleB = Bodies.circle(p.x + 55, p.y, 5);
       let compoundBody = Phaser.Physics.Matter.Matter.Body.create({
         isStatic: true,
-        parts: [rect, circleA, circleB],
-        render: { visible: false }
+        parts: [rect], // [rect, circleA, circleB],
+        render: { visible: false },
       });
       //let platform = this.matter.add.sprite(p.x, p.y, 'platform', 0, { isStatic: true, shape: {type: 'rectangle', width: 110, height: 10}, render: {visible: false} }).setFrame(3)
       let platform = this.matter.add.sprite(p.x, p.y, 'platform').setFrame(3)
       platform.setExistingBody(compoundBody);
       //platform.setBounce(1.2)
-      platform.body.restitution = 1.1
+      platform.body.restitution = 1.2
       platform.angle = p.angle
+      //platform.body.collisionFilter.group = group
       platforms.push(platform);
     }
     return platforms
@@ -94,21 +98,27 @@ export class GameScene extends Phaser.Scene {
     for (let o of level.obstacles) {
       const mx = Math.max(o.width, o.height);
       const mn = Math.min(o.width, o.height);
-      const rw = o.width === mx ? mx - o.width : o.width;
-      const rh = o.height === mx ? mx - o.height : o.height;
+      const rw = o.width === mx ? mx - mn : o.width;
+      const rh = o.height === mx ? mx - mn : o.height;
+      const xOffset = (o.width-rw)/2
+      const yOffset = (o.height-rh)/2
       let rect = Bodies.rectangle(o.x, o.y, rw, rh);
-      let circleA = Bodies.circle(o.x - rw / 2, o.y - rh / 2, mn / 2);
-      let circleB = Bodies.circle(o.x + rw / 2, o.y + rw / 2, mn / 2);
+      let circleA = Bodies.circle(o.x - xOffset, o.y - yOffset, mn / 2);
+      let circleB = Bodies.circle(o.x + xOffset, o.y + yOffset, mn / 2);
+      //console.log(o.x, o.y, rw, rh)
+      //console.log(o.x - xOffset, o.y - yOffset, mn / 2);
+      //console.log(o.x + xOffset, o.y + yOffset, mn / 2);
       let compoundBody = Phaser.Physics.Matter.Matter.Body.create({
         isStatic: true,
         parts: o.width === o.height ? [circleA] : [rect, circleA, circleB],
-        render: { visible: false }
+        render: { visible: true }
       });
       let obstacleShape = this.add.rexRoundRectangle(o.x, o.y, o.width, o.height, mn / 2)
       obstacleShape.setStrokeStyle(6, 0x3f2a14)
       let obstacle = this.matter.add.gameObject(obstacleShape)
       obstacle.setExistingBody(compoundBody);
       obstacle.angle = o.angle
+      //obstacle.body.collisionFilter.group = group
       //this.obstacles.push(obstacle);
     }
   }
@@ -129,10 +139,18 @@ export class GameScene extends Phaser.Scene {
     this.load.image('arrow', Koji.config.images.arrow);
     this.load.spritesheet('player', Koji.config.images.player, { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('platform', Koji.config.images.platform, { frameWidth: 120, frameHeight: 50 });
+
+    this.load.audio('loss', [ Koji.config.audio.loss ]);
+    this.load.audio('jump', [ Koji.config.audio.jump ]);
+    this.load.audio('rope', [ Koji.config.audio.rope ]);
   }
 
   create() {
-    this.matter.world.update30Hz();
+    this.ropeSound = this.sound.add('rope', {volume: 0.6});
+    this.loss = this.sound.add('loss');
+    let jump = this.sound.add('jump', {volume: 0.2});
+
+    //this.matter.world.update30Hz();
     var graphics = this.add.graphics();
     const [W, H] = [Koji.config.levelEditor.levels[this.currentLevel].width, CONFIG.HEIGHT]
 
@@ -160,18 +178,19 @@ export class GameScene extends Phaser.Scene {
 
     //this.matter.world.setBounds();
     this.createObstacles();
-    let platforms = this.createPlatforms();
+    const platformGroup = this.matter.body.nextGroup(true)
+    let platforms = this.createPlatforms(platformGroup);
     this.createHandles();
     //var ballA = this.matter.add.gameObject(this.add.rectangle(50, 50, 16, 64, 0xCCCCCC), { shape: 'rectangle', friction: 0.005, restitution: 0.6 });
     //var ballB = this.matter.add.gameObject(this.add.circle(50, 50, 10, 0xCCCCCC), { shape: 'circle', friction: 0.005, restitution: 0.6 });
 
+    this.player = this.matter.add.sprite(50, 0, 'player', 0, { shape: { type: 'circle', radius: 25 }, scale: 1, restitution: 0, friction: 0, frictionAir: 0, frictionStatic: 0, timeScale: 1, inertia: Infinity, render: { visible: false } });
     //let rect = this.add.circle(50, 0, 20, 0xCCCCCC); //.setOrigin(0);
     //Phaser.Geom.Rectangle.Offset(rect, 0, -24);
     //let ball = this.add.image(50, 0, 'ball');
-    this.player = this.matter.add.sprite(50, 0, 'player', 0, { shape: { type: 'circle', radius: 25 }, scale: 0.5, restitution: 0, friction: 0, frictionAir: 0, timeScale: 0.5, render: { visible: true } });
     //this.player.setBody({type: 'circle', radius: 20})
     this.player.setOrigin(0.5, 0.25);
-    this.player.setMass(1);
+    //this.player.setMass(1);
     this.player.setFrame(1)
     //this.player.setAngularVelocity(0.1);
     this.cameras.main.startFollow(this.player, true);
@@ -181,7 +200,8 @@ export class GameScene extends Phaser.Scene {
     this.input.on('pointerup', (pointer) => this.clearRope());
     this.input.on('pointerdown', (pointer) => this.createRopeTo(this.nearest));
 
-    this.matterCollision.addOnCollideStart({
+
+    /*this.matterCollision.addOnCollideStart({
       objectA: platforms,
       objectB: this.player,
       callback: ({ gameObjectA, gameObjectB }) => {
@@ -190,9 +210,41 @@ export class GameScene extends Phaser.Scene {
         //gameObjectB.setVelocityY(-this.player.body.velocity.y)
         //console.log(gameObjectA)
       }
-    });
+    });*/
+    //this.player.setOnCollide({})
+    this.matter.world.on('collisionstart', (event, platformBody, playerBody) => {
+      if (playerBody === this.player.body && platformBody.collisionFilter.group === platformGroup) {
+        platformBody.gameObject.play("bounce", false)
+        this.player.setFrame(0)
+        jump.play()
+        if (this.rope !== null) {
+          const n = event.pairs[0].collision.normal
+          const v = this.player.body.velocity
+          const r = event.pairs[0].restitution
+          const m = CONFIG.BOUNCE_SPEED
+          const s = Math.min(m, this.player.body.speed * r)
+          this.matter.setVelocity(this.player, v.x * s, v.y * s)
+        }
+        //this.matter.body.applyForce(playerBody, playerBody.position, event.pairs[0].normal.mult(1))
+      }
+  });
+    this.matter.world.on('collisionactive', (event, platformBody, playerBody) => {
+      if (playerBody === this.player.body && platformBody.collisionFilter.group === platformGroup) {
+        //this.matter.body.applyForce(playerBody, playerBody.position, this.matter.vector.mult(event.pairs[0].collision.normal, 50))
+        const n = event.pairs[0].collision.normal
+        const r = event.pairs[0].restitution
+        const v = this.player.body.velocity
+        const m = CONFIG.BOUNCE_SPEED
+        const s = Math.min(m, this.player.body.speed * r)
+        console.log(event.pairs[0].collision, playerBody, s, r)
+        //playerBody.force = this.matter.vector.mult(event.pairs[0].collision.normal, 50)
+        //this.player.setVelocity(this.matter.vector.mult(event.pairs[0].collision.normal, -1))
+        //this.matter.setVelocity(this.player, v.x - n.x*v.x*r, v.y - n.y*v.y*r)
+        this.matter.setVelocity(this.player, v.x - n.x*s, v.y - n.y*s)
+      }
+  });
 
-    //this.RAF.start(this.update2.bind(this), true, 10)
+    //this.RAF.start(this.update3.bind(this), true, 60)
 
     /*this.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
         console.log(bodyA, bodyB, gameOver)
@@ -206,8 +258,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(t, dt) {
-    if (this.player.y > (CONFIG.HEIGHT + CONFIG.MAX_ROPE_LENGTH))
+    this.matter.step(dt)
+  //update3() {
+    if (this.player.y > (CONFIG.HEIGHT + CONFIG.MAX_ROPE_LENGTH)) {
       this.scene.restart()
+      this.loss.play()
+    }
 
     const b = this.player.body
     if (b.speed > CONFIG.MAX_SPEED) {
@@ -217,6 +273,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.update2()
+
   }
 
   update2() {

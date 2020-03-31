@@ -18,12 +18,24 @@ var config = {
   render: {
     powerPreference: 'high-performance',
   },
-  fps: 30,
+  fps: {
+    target: 60
+  },
   disableContextMenu: true,
   physics: {
     default: 'matter',
     matter: {
-      debug: true
+      autoUpdate: false,
+      enableSleeping: true,
+      restingThresh: 0.0001,
+      restingThreshTangent: 0.0001,
+      //constraintIterations: 10,
+      velocityIterations: 10,
+      //positionIterations: 100,
+      debug: true,
+      //runner: {
+      //  fps: 60
+      //}
     }
   },
   plugins: {
