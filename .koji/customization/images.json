@@ -1,12 +1,13 @@
 {
   "images": {
-    "background": "",
-    "logo": "",
+    "background": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/106nn-bg.png",
+    "logo": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/02scy-logo.png",
     "player": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/zjywo-atlas.png",
     "highlight": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/3v905-highlight.png",
     "arrow": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/nbo0d-arrow.png",
     "handle": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/erc84-handle.png",
-    "platform": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/kkkr5-platform.png"
+    "platform": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/kkkr5-platform.png",
+    "finish": "https://images.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/k94ct-finish.png"
   },
   "@@editor": [
     {
@@ -54,6 +55,12 @@
         {
           "key": "arrow",
           "name": "Arrow Image",
+          "description": "",
+          "type": "image"
+        },
+        {
+          "key": "finish",
+          "name": "Finish Image",
           "description": "",
           "type": "image"
         }

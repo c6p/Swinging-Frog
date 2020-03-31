@@ -22,6 +22,10 @@ export class GameScene extends Phaser.Scene {
   //obstacles = []
   ropeSound
   loss
+  win
+  level
+
+  tutorialText
 
   nearestHandleTo(point) {
     const handles = Koji.config.levelEditor.levels[this.currentLevel].handles
@@ -45,8 +49,9 @@ export class GameScene extends Phaser.Scene {
       this.matter.world.removeConstraint(this.rope)
       this.rope = null
     }
-    this.matter.setVelocityY(this.player, this.player.body.velocity.y - 2);
+    this.matter.setVelocityY(this.player, this.player.body.velocity.y - 4);
     this.player.setFrame(0);
+    this.tutorial(0)
   }
 
   createRopeTo(point) {
@@ -57,7 +62,9 @@ export class GameScene extends Phaser.Scene {
     //console.log(this.rope)
     this.player.setFrame(1)
     this.ropeSound.play()
+    this.tutorial(1)
   }
+
 
   createHandles() {
     const level = Koji.config.levelEditor.levels[this.currentLevel]
@@ -70,7 +77,8 @@ export class GameScene extends Phaser.Scene {
 
   createPlatforms(group) {
     let platforms = []
-    const level = Koji.config.levelEditor.levels[this.currentLevel]
+    //const level = Koji.config.levelEditor.levels[this.currentLevel]
+    const level = this.level
     for (let p of level.platforms) {
       let rect = Bodies.rectangle(p.x, p.y, 120, 10);
       rect.collisionFilter.group = group
@@ -94,7 +102,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   createObstacles() {
-    const level = Koji.config.levelEditor.levels[this.currentLevel]
+    //const level = Koji.config.levelEditor.levels[this.currentLevel]
+    const level = this.level
     for (let o of level.obstacles) {
       const mx = Math.max(o.width, o.height);
       const mn = Math.min(o.width, o.height);
@@ -111,7 +120,7 @@ export class GameScene extends Phaser.Scene {
       let compoundBody = Phaser.Physics.Matter.Matter.Body.create({
         isStatic: true,
         parts: o.width === o.height ? [circleA] : [rect, circleA, circleB],
-        render: { visible: true }
+        render: { visible: false }
       });
       let obstacleShape = this.add.rexRoundRectangle(o.x, o.y, o.width, o.height, mn / 2)
       obstacleShape.setStrokeStyle(6, 0x3f2a14)
@@ -131,6 +140,8 @@ export class GameScene extends Phaser.Scene {
 
   init({ level = 0 }) {
     this.currentLevel = level;
+    this.level = Koji.config.levelEditor.levels[this.currentLevel]
+    window.localStorage.setItem('level', this.currentLevel)
   }
 
   preload() {
@@ -139,20 +150,32 @@ export class GameScene extends Phaser.Scene {
     this.load.image('arrow', Koji.config.images.arrow);
     this.load.spritesheet('player', Koji.config.images.player, { frameWidth: 100, frameHeight: 100 });
     this.load.spritesheet('platform', Koji.config.images.platform, { frameWidth: 120, frameHeight: 50 });
+    this.load.image('finish', Koji.config.images.finish);
 
     this.load.audio('loss', [ Koji.config.audio.loss ]);
+    this.load.audio('win', [ Koji.config.audio.win ]);
     this.load.audio('jump', [ Koji.config.audio.jump ]);
     this.load.audio('rope', [ Koji.config.audio.rope ]);
   }
 
   create() {
+
     this.ropeSound = this.sound.add('rope', {volume: 0.6});
     this.loss = this.sound.add('loss');
+    this.win = this.sound.add('win');
     let jump = this.sound.add('jump', {volume: 0.2});
 
     //this.matter.world.update30Hz();
     var graphics = this.add.graphics();
-    const [W, H] = [Koji.config.levelEditor.levels[this.currentLevel].width, CONFIG.HEIGHT]
+    this.width = this.level.width + 60
+    const [W, H] = [this.width, CONFIG.HEIGHT]
+    
+    this.add.tileSprite(this.level.width, H/2, 40, H, 'finish');
+    if (this.currentLevel === 0) {
+      this.tutorialText = this.add.text(300, 150, "", { fontFamily: Koji.config.strings.font.family, fontSize: '24px', fill: Koji.config.colors.font, align: 'center' }).setOrigin(0.5,0.5)
+      this.tutorialText.setScrollFactor(0)
+    }
+    this.tutorial()
 
     graphics.fillGradientStyle(0x2980B9, 0x6DD5FA, 0x0082c8, 0x667db6, 1);
     graphics.fillRect(0, 0, W, H);
@@ -242,6 +265,7 @@ export class GameScene extends Phaser.Scene {
         //this.matter.setVelocity(this.player, v.x - n.x*v.x*r, v.y - n.y*v.y*r)
         this.matter.setVelocity(this.player, v.x - n.x*s, v.y - n.y*s)
       }
+
   });
 
     //this.RAF.start(this.update3.bind(this), true, 60)
@@ -257,12 +281,34 @@ export class GameScene extends Phaser.Scene {
     //this.matter.add.mouseSpring();
   }
 
+  tutorial(index=0) {
+    if (this.currentLevel === 0) {
+      switch(index) {
+        case 1:
+          this.tutorialText.setText("Release 'Touch' to move FROG right\nOnwards to Finish & Glory")
+          break
+        default:
+          this.tutorialText.setText("To cling to highlighted handle\nTouch & Hold")
+      }
+    }
+  }
+
   update(t, dt) {
     this.matter.step(dt)
+
   //update3() {
     if (this.player.y > (CONFIG.HEIGHT + CONFIG.MAX_ROPE_LENGTH)) {
       this.scene.restart()
       this.loss.play()
+    }
+    if (this.player.x > this.level.width) {
+      if (this.currentLevel+1 < Koji.config.levelEditor.levels.length) {
+        this.scene.restart({level: this.currentLevel+1})
+        this.win.play()
+      } else {
+        this.win.play()
+        this.scene.start("EndScene");
+      }
     }
 
     const b = this.player.body
@@ -272,11 +318,6 @@ export class GameScene extends Phaser.Scene {
       this.matter.setVelocity(this.player, v.x * m, v.y * m)
     }
 
-    this.update2()
-
-  }
-
-  update2() {
     if (this.player.y < 0 || this.player.x < 0) {
       this.arrow.visible = true
       if (this.player.y < 0) {

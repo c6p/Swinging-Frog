@@ -11,6 +11,8 @@ export class MenuScene extends Phaser.Scene {
     })
   }
 
+  level
+
   preload() {
 
     if (Koji.config.images.background) {
@@ -50,6 +52,8 @@ export class MenuScene extends Phaser.Scene {
       this.startText.setOrigin(0.5,0.5);
       this.startText.setInteractive().on('pointerdown', this.start_game, this);
     }
+    this.level = window.localStorage.getItem('level') || 0
+    this.add.text(CONFIG.WIDTH/2, CONFIG.HEIGHT/2+400, "Level: " + this.level, { fontFamily: Koji.config.strings.font.family, fontSize: '30px', fill: Koji.config.colors.font, align: 'center'}).setOrigin(0.5,0.5);
 
     // audio
     if (Koji.config.audio.background) {

@@ -9,24 +9,21 @@ export class UIScene extends Phaser.Scene {
     })
   }
 
-  preload() {
-    this.load.audio('music', [ Koji.config.audio.background ]);
-   }
+  preload() { }
   
   create() {
     this.unmute = this.add.image(CONFIG.WIDTH - CONFIG.UI_ICON_SIZE - CONFIG.UI_ICON_PADDING, CONFIG.UI_ICON_PADDING, 'unmute').setOrigin(1,0).setInteractive().on('pointerdown', this.toggleMute, this);
     this.mute = this.add.image(CONFIG.WIDTH - CONFIG.UI_ICON_SIZE - CONFIG.UI_ICON_PADDING, CONFIG.UI_ICON_PADDING, 'mute').setOrigin(1,0).setInteractive().on('pointerdown', this.toggleMute, this).setTint(Koji.config.colors.button.replace("#", "0x"));
+
+    this.game.sound.mute = true
     if (this.game.sound.mute) {
       this.unmute.setAlpha(0);
     } else {
       this.mute.setAlpha(0);
     }
-    let music = this.sound.add('music', {loop: true});
-    music.play()
   }
 
-  update() {
-   }
+  update() { }
 
   toggleMute() {
     this.game.sound.mute = !this.game.sound.mute

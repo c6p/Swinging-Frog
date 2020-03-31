@@ -2,8 +2,9 @@
   "audio": {
     "background": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/5ty8b-jumphigherrunfaster.ogg",
     "jump": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/lvvhd-bounce.ogg",
-    "loss": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/98h1e-mutant_frog1.ogg",
-    "rope": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/6isjz-chirp2.ogg"
+    "win": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/98h1e-mutant_frog1.ogg",
+    "rope": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/6isjz-chirp2.ogg",
+    "loss": "https://objects.koji-cdn.com/baa36116-cd5c-4c4d-b826-73e36747d979/0o2u2-mutant_frog2.ogg"
   },
   "@@editor": [
     {
@@ -25,13 +26,19 @@
           "type": "sound"
         },
         {
+          "key": "rope",
+          "name": "",
+          "description": "",
+          "type": "sound"
+        },
+        {
           "key": "loss",
           "name": "",
           "description": "",
           "type": "sound"
         },
         {
-          "key": "rope",
+          "key": "win",
           "name": "",
           "description": "",
           "type": "sound"

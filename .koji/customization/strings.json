@@ -30,7 +30,10 @@
       }
     },
     "title": "Game Template",
-    "play_button": "Play"
+    "play_button": "Play",
+    "again_button": "Again?",
+    "win": "You Win!",
+    "credits": "Can ALTIPARMAK - 2020\n\n\nMusic by bart\n\nhttps://opengameart.org\n/content/jump-higher-run-faster-jump-run-miniboss-mix"
   },
   "@@editor": [
     {
@@ -55,6 +58,24 @@
           "key": "play_button",
           "name": "Play button text",
           "description": "Text displayed on the play button",
+          "type": "string"
+        },
+        {
+          "key": "again_button",
+          "name": "Play again button text",
+          "description": "Text displayed on the play again button",
+          "type": "string"
+        },
+        {
+          "key": "win",
+          "name": "Win text",
+          "description": "Win Text",
+          "type": "string"
+        },
+        {
+          "key": "credits",
+          "name": "Credits text",
+          "description": "Text displayed on credits screen",
           "type": "string"
         }
       ]
