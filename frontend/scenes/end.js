@@ -37,6 +37,6 @@ export class EndScene extends Phaser.Scene {
   update() { }
 
   start_again() {
-    this.scene.start("MenuScene");
+    this.scene.start("MenuScene")
   }
 }

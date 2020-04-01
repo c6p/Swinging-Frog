@@ -145,7 +145,7 @@ export class GameScene extends Phaser.Scene {
     this.lost = false
 
     this.ropeSound = this.sound.add('rope', { volume: 0.6 });
-    this.loss = this.sound.add('loss');
+    this.loss = this.sound.add('loss', {volume: 2});
     this.win = this.sound.add('win');
     let jump = this.sound.add('jump', { volume: 0.2 });
 
@@ -232,15 +232,17 @@ export class GameScene extends Phaser.Scene {
   update(t, dt) {
     this.matter.step(dt)
 
+    if (!this.lost) {
     if (this.player.y > (CONFIG.HEIGHT + CONFIG.MAX_ROPE_LENGTH)) {
       this.lost = true
-      this.cameras.main.pan(0, this.level.width, CONFIG.SCENE_TRANSITION_TIME * 2, 'Elastic');
       this.loss.play()
+      this.cameras.main.stopFollow()
+      this.cameras.main.pan(0, this.level.width, CONFIG.SCENE_TRANSITION_TIME * 2, 'Elastic');
       this.time.delayedCall(CONFIG.SCENE_TRANSITION_TIME * 2, () => this.scene.restart())
     }
-    if (!this.lost && this.player.x > this.level.width) {
+    else if (this.player.x > this.level.width && this.player.y > 0 && this.player.y < CONFIG.HEIGHT) {
       this.cameras.main.fade(CONFIG.SCENE_TRANSITION_TIME);
-      if (this.currentLevel + 1 < Koji.config.levelEditor.levels.length) {
+      if (this.currentLevel + 1 < Koji.config.levelEditor.levels.length)
         this.win.play()
         this.time.delayedCall(CONFIG.SCENE_TRANSITION_TIME, () => this.scene.restart({ level: this.currentLevel + 1 }))
       } else {
@@ -248,6 +250,7 @@ export class GameScene extends Phaser.Scene {
         this.scene.start("EndScene")
       }
     }
+  }
 
     const b = this.player.body
     if (b.speed > CONFIG.MAX_SPEED) {

@@ -34,10 +34,10 @@
     "again_button": "Again?",
     "win": "You Win!",
     "credits": "Can ALTIPARMAK - 2020\n\n\nMusic by bart\n\nhttps://opengameart.org\n/content/jump-higher-run-faster-jump-run-miniboss-mix",
-    "tutorial0": "Release 'Touch' to move FROG right\nOnwards to Finish & Glory",
-    "tutorial1": "To cling to highlighted handle\nTouch & Hold",
+    "tutorial1": "Release 'Touch' to move FROG right\nOnwards to Finish & Glory",
+    "tutorial0": "To cling to highlighted handle\nTouch & Hold",
     "scene_transition_time": 500,
-    "max_rope_length": 500
+    "max_rope_length": 400
   },
   "@@editor": [
     {
