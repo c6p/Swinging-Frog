@@ -27,11 +27,11 @@ var config = {
     matter: {
       autoUpdate: false,
       enableSleeping: true,
-      restingThresh: 0.0001,
-      restingThreshTangent: 0.0001,
-      //constraintIterations: 10,
+      restingThresh: 0.001,
+      restingThreshTangent: 0.001,
+      constraintIterations: 10,
       velocityIterations: 10,
-      //positionIterations: 100,
+      positionIterations: 10,
       debug: true,
       //runner: {
       //  fps: 60
