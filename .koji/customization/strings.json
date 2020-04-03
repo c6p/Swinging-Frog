@@ -38,8 +38,7 @@
     "tutorial0": "To cling to highlighted handle\nTouch & Hold",
     "scene_transition_time": 500,
     "max_rope_length": 600,
-    "platform_bounce": 1.1,
-    "game_speed": 1
+    "platform_bounce": 1.1
   },
   "@@editor": [
     {
@@ -120,17 +119,6 @@
           "typeOptions": {
             "min": 1,
             "max": 1.5,
-            "step": 0.01
-          }
-        },
-        {
-          "key": "game_speed",
-          "name": "Game Speed",
-          "description": "Game Speed (default 1)",
-          "type": "range",
-          "typeOptions": {
-            "min": 0.7,
-            "max": 1.2,
             "step": 0.01
           }
         }

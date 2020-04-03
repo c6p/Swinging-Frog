@@ -15,9 +15,6 @@ var config = {
     height: CONFIG.HEIGHT,
     autoCenter: Phaser.Scale.Center.CENTER_BOTH
   },
-  render: {
-    powerPreference: 'high-performance',
-  },
   fps: {
     target: 60
   },
@@ -33,9 +30,6 @@ var config = {
       velocityIterations: 10,
       positionIterations: 10,
       debug: true,
-      //runner: {
-      //  fps: 60
-      //}
     }
   },
   plugins: {
@@ -67,7 +61,7 @@ if (Koji.config.strings.font) {
       document.body.style.background = style;
 
       document.getElementById('loading').remove();
-      var game = new Phaser.Game(config)
+      new Phaser.Game(config)
 
     }
   });

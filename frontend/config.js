@@ -9,8 +9,8 @@ export const CONFIG = {
 	MAX_ROPE_LENGTH: Koji.config.strings.max_rope_length,
 	ROPE_COLOR: Koji.config.colors.rope_color.replace("#", "0x"),
 	BOUNCE_FACTOR: Koji.config.strings.platform_bounce,
-	GAME_SPEED: Koji.config.strings.game_speed,
+	GAME_SPEED: 1,
 	MAX_SPEED: 20,
-  BASE_BOUNCE_SPEED: 5,
-  ROPE_JUMP_SPEED: 2,
+  BASE_BOUNCE_SPEED: 8,
+  ROPE_JUMP_SPEED: 4,
 };

@@ -7,17 +7,13 @@ const PI2 = Math.PI * 2
 const [PLAYING, LOST, WON] = [0, 1, 2]
 
 function angle(a, b) {
-  //return Math.abs(Math.atan2(v2.y - v1.y, v2.x - v1.x))
   return Math.abs(Math.atan2( a.x*b.y - a.y*b.x, a.x*b.x + a.y*b.y ))
-  //return Math.abs(Phaser.Math.Angle.BetweenPoints(v1, v2))
 }
 
 function getPerpendicularVector(ropeVector, normalVector) {
   let { x, y } = ropeVector
   const perpVector = Vector.create(-y, x)
   const perpVectorOpposite = Vector.create(y, -x)
-  //console.log("Vector", normalVector, perpVector, perpVectorOpposite)
-  //console.log("Angle", angle(perpVector, normalVector), angle(perpVectorOpposite, normalVector))
   return Vector.normalise(angle(perpVector, normalVector) < angle(perpVectorOpposite, normalVector)
     ? perpVector : perpVectorOpposite)
 }
@@ -66,7 +62,10 @@ export class GameScene extends Phaser.Scene {
       this.matter.world.removeConstraint(this.rope)
       this.rope = null
     }
-    this.matter.setVelocityY(this.player, this.player.body.velocity.y - CONFIG.ROPE_JUMP_SPEED);
+    const vy = this.player.body.velocity.y
+    const f = 60 / this.game.loop.actualFps
+    const s = CONFIG.ROPE_JUMP_SPEED * f
+    this.matter.setVelocityY(this.player.body, vy - s)
     this.player.setFrame(0);
     this.tutorial(0)
   }
@@ -167,7 +166,6 @@ export class GameScene extends Phaser.Scene {
     if (this.rope === null || this.player === null)
       return { x: 0, y: 0 }
     {
-      //console.log("Normal", pair.collision)
       const n = Vector.neg(pair.collision.normal)
       const p = getPerpendicularVector(Vector.sub(this.rope.pointA, this.player.body.position), n)
       return { x: p.x, y: p.y }
@@ -231,23 +229,14 @@ export class GameScene extends Phaser.Scene {
       if (playerBody !== this.player.body || platformBody.collisionFilter.group !== platformGroup)
         return
       const pair = event.pairs[0]
-      const speed = CONFIG.BASE_BOUNCE_SPEED * pair.restitution
+      let speed = CONFIG.BASE_BOUNCE_SPEED * pair.restitution
       if (this.player.body.speed < speed) {
+        speed = speed * 60 / this.game.loop.actualFps
         const n = this.bounceNormalWithRope(pair)
         const v = this.player.body.velocity
         this.matter.setVelocity(this.player, v.x + n.x * speed, v.y + n.y * speed)
-        //console.log(n, v, speed)
       }
     })
-    /*this.matter.world.on('collisionactive', (event, platformBody, playerBody) => {
-      if (playerBody !== this.player.body || platformBody.collisionFilter.group !== platformGroup)
-        return
-      const pair = event.pairs[0]
-      const speed = Math.max(CONFIG.BASE_BOUNCE_SPEED, this.player.body.speed) * pair.restitution
-      const n = this.bounceNormalWithRope(pair)
-      this.matter.setVelocity(this.player, n.x * speed, n.y * speed)
-      console.log(n, speed)
-    });*/
 
     this.add.text(CONFIG.WIDTH / 2, 25, "Level: " + this.currentLevel, { fontFamily: Koji.config.strings.font.family, fontSize: '24px', fill: Koji.config.colors.font, align: 'center' }).setOrigin(0.5, 0.5).setScrollFactor(0)
   }
@@ -288,10 +277,10 @@ export class GameScene extends Phaser.Scene {
     }
 
     const b = this.player.body
-    if (b.speed > CONFIG.MAX_SPEED) {
-      const m = CONFIG.MAX_SPEED / b.speed
+    if (this.rope === null && b.speed > CONFIG.MAX_SPEED) {
+      const m = (CONFIG.MAX_SPEED * 60 ) / (b.speed * this.game.loop.actualFps)
       const v = b.velocity
-      this.matter.setVelocity(this.player, v.x * m, v.y * m)
+      this.matter.setVelocity(this.player.body, v.x * m, v.y * m)
     }
 
     if (this.player.y < 0 || this.player.x < 0) {
