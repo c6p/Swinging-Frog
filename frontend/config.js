@@ -11,6 +11,6 @@ export const CONFIG = {
 	BOUNCE_FACTOR: Koji.config.strings.platform_bounce,
 	GAME_SPEED: 1,
 	MAX_SPEED: 20,
-  BASE_BOUNCE_SPEED: 8,
+  BASE_BOUNCE_SPEED: 10,
   ROPE_JUMP_SPEED: 4,
 };

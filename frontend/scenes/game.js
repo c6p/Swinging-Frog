@@ -277,8 +277,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     const b = this.player.body
-    if (this.rope === null && b.speed > CONFIG.MAX_SPEED) {
-      const m = (CONFIG.MAX_SPEED * 60 ) / (b.speed * this.game.loop.actualFps)
+    if (!this.rope && b.speed > CONFIG.MAX_SPEED) {
+      const m = Math.min(1, (CONFIG.MAX_SPEED * 60 ) / (b.speed * this.game.loop.actualFps))
       const v = b.velocity
       this.matter.setVelocity(this.player.body, v.x * m, v.y * m)
     }
