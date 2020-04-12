@@ -21,26 +21,26 @@
         },
         {
           "key": "jump",
-          "name": "",
-          "description": "",
+          "name": "Jump Sound",
+          "description": "Sound played when frog bounced off a platform",
           "type": "sound"
         },
         {
           "key": "rope",
-          "name": "",
-          "description": "",
+          "name": "Rope sound",
+          "description": "Sound played when frog throws its tongue",
           "type": "sound"
         },
         {
           "key": "loss",
-          "name": "",
-          "description": "",
+          "name": "Loss Sound",
+          "description": "Sound played when frog fell down",
           "type": "sound"
         },
         {
           "key": "win",
-          "name": "",
-          "description": "",
+          "name": "Win sound",
+          "description": "Sound played when frog has passed the finish line",
           "type": "sound"
         }
       ]
