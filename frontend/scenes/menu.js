@@ -56,7 +56,7 @@ export class MenuScene extends Phaser.Scene {
     // audio
     if (Koji.config.audio.background && !this.background_music) {
       this.background_music = this.sound.add('background');
-      this.background_music.setVolume(0.8);
+      this.background_music.setVolume(0.4);
       this.background_music.setLoop(true);
     }
   }
